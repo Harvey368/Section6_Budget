@@ -31,6 +31,11 @@ var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
     document.addEventListener('keypress',function(event) { //check every key press event
         console.log(event);                  // Browser will pass object (keypress) to variable
         console.log(event.keyCode);        // Enter is 13
+
+        if ( (event.keyCode===13)||(event.which===13) ){ //some browser use keycode or which
+            console.log('Enter ...')
+        }
+
     });
 
 })(budgetController, UIController);

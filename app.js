@@ -1,6 +1,22 @@
 // ------------------- Budget Controller -------------------
 var budgetController = ( function () {       //--> IIFE function
 
+    var Expense = function (id, description, value) {    // Object constructor for expense
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+
+    var Income = function (id,description, value) {      // Object constructor for Income
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    }
+
+
+    var allExpenses = [];
+    var allIncomes = [];
+    var totalExpenses = 0;
 
 })();
 

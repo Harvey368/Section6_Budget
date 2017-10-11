@@ -12,7 +12,8 @@ var UIController=(function () {   // Since it is IIFE, so we need return a objec
     var DOMStrings={  //Create a interface to store all outside info (UI) which maybe changed frequently
         inputType:  '.add__type',
         inputDescription: '.add__description',
-        inputValue: '.add__value'
+        inputValue: '.add__value',
+        inputBtn: '.add__btn'
     }
 
     return {      //Return a object, it own a method to get the input data
@@ -22,8 +23,11 @@ var UIController=(function () {   // Since it is IIFE, so we need return a objec
                 description: document.querySelector(DOMStrings.inputDescription).value,
                 value: document.querySelector(DOMStrings.inputValue).value
             };
-        }
+        },
 
+        getDOMstrings: function () {  //This method allow other module can share this info outside of it
+            return DOMStrings;
+        }
     };
 
 })();
@@ -32,6 +36,8 @@ var UIController=(function () {   // Since it is IIFE, so we need return a objec
 
 //----------------------Global APP controller ----------------
 var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
+
+    var DOM = UICtrl.getDOMstrings();    //get the DOM variable from UIcontroller and share it
 
     var ctrlAddItem=function () {
 
@@ -50,7 +56,7 @@ var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
     }
 
 
-    document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
     document.addEventListener('keypress',function(event) { //check every key press event
         if ( (event.keyCode===13)||(event.which===13) ){ //some browser use keycode or which

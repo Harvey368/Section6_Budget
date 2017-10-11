@@ -13,10 +13,16 @@ var budgetController = ( function () {       //--> IIFE function
         this.value = value;
     }
 
-
-    var allExpenses = [];
-    var allIncomes = [];
-    var totalExpenses = 0;
+    var data={         // New data structure
+        allItems: {
+            exp:[],
+            inc:[]
+        },
+        totals: {
+            exp:0,
+            inc:0
+        }
+    }
 
 })();
 

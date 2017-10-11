@@ -37,7 +37,19 @@ var UIController=(function () {   // Since it is IIFE, so we need return a objec
 //----------------------Global APP controller ----------------
 var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
 
-    var DOM = UICtrl.getDOMstrings();    //get the DOM variable from UIcontroller and share it
+    var setupEventListeners=function () {  //Put all event listener in one method
+
+        var DOM = UICtrl.getDOMstrings();    //get the DOM variable from UIcontroller and share it
+                           // DOM only be used when add event listener, so move it into this method
+
+        document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+        document.addEventListener('keypress',function(event) { //check every key press event
+            if ( (event.keyCode===13)||(event.which===13) ){ //some browser use keycode or which
+                ctrlAddItem();
+            }
+        });
+    }
 
     var ctrlAddItem=function () {
 
@@ -53,17 +65,21 @@ var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
 
         //5. Display the budget on the UI
 
+    };
+
+
+    return{
+        init: function () {
+            console.log('started!');
+            setupEventListeners();
+        }
+
     }
 
-
-    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
-
-    document.addEventListener('keypress',function(event) { //check every key press event
-        if ( (event.keyCode===13)||(event.which===13) ){ //some browser use keycode or which
-            ctrlAddItem();
-        }
-    });
-
 })(budgetController, UIController);
+
+//------------------------------------------------------------
+
+controller.init();
 
 //------------------------------------------------------------

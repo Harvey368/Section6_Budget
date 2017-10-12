@@ -24,6 +24,39 @@ var budgetController = ( function () {       //--> IIFE function
         }
     }
 
+    return {
+        addItem: function (type, des, val) {
+            var newItem, ID;
+
+            // Create new ID  --> find the last ID then +1
+            // find last ID --> find the last object and get the id
+            // exp is array, so find the last one in array [data.allItems[type].length - 1]
+            if (data.allItems[type].length > 0) {
+                ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+                ID = 0;     // ID=0 for the first time since no object in the array
+            }
+            
+            // Create new item based on the 'exp' or 'inc' type
+            if (type==='exp') {
+                newItem = new Expense(ID, des, val);
+            } else if (type==='inc'){
+                newItem = new Income(ID, des, val)
+            }
+
+            //Push it into our data structure
+            data.allItems[type].push(newItem);
+
+            // Return the new element
+            return newItem;
+        },
+        
+        testing: function () {
+            console.log(data);
+        }
+
+    }
+
 })();
 
 
@@ -74,12 +107,13 @@ var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
     }
 
     var ctrlAddItem=function () {
+        var input, newItem;
 
         //1. Get the filed input date
-        var input= UICtrl.getInput();
-        console.log(input);
+        input = UICtrl.getInput();
 
         //2. Add the item to the budget controller
+        newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
         //3. Add the item to UI
 

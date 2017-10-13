@@ -78,7 +78,7 @@ var UIController=(function () {   // Since it is IIFE, so we need return a objec
             return {               // This method should return a object include all input data
                 type: document.querySelector(DOMStrings.inputType).value,   //Will be either inc or exp
                 description: document.querySelector(DOMStrings.inputDescription).value,
-                value: document.querySelector(DOMStrings.inputValue).value
+                value: parseFloat(document.querySelector(DOMStrings.inputValue).value)
             };
         },
 
@@ -109,7 +109,7 @@ var UIController=(function () {   // Since it is IIFE, so we need return a objec
             fields = document.querySelectorAll(DOMStrings.inputDescription + ', ' + DOMStrings.inputValue);
                                               // it will return a list. it use ',' as OR option
             fieldsArr = Array.prototype.slice.call(fields);  // CALL function --> apply array method on LIST
-            console.log(fieldsArr);
+            // console.log(fieldsArr);
 
             fieldsArr.forEach( function (current, index, array) {
                 current.value = "";           // clearing the value
@@ -145,24 +145,52 @@ var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
         });
     }
 
+
+    var updateBudget = function () {
+
+        // 1.Calculate the budget
+
+        // 2. Return the budget
+
+        // 3. Display the budget on the UI
+
+
+    };
+
+
+
     var ctrlAddItem=function () {
         var input, newItem;
 
         //1. Get the filed input date
         input = UICtrl.getInput();
 
-        //2. Add the item to the budget controller
-        newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+        var ifValid=false;
 
-        //3. Add the item to UI
-        UICtrl.addListItem(newItem, input.type);
+        if ( (input.description !=="") && ( input.value>0 ) && (!isNaN(input.value)) ){  //verify input is valid
+            ifValid=true;
+        }
 
-        //4. Clear the fields
-        UICtrl.clearFields();
+        if (ifValid) {
+            //2. Add the item to the budget controller
+            newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
-        //5. Calculate the budget
+            //3. Add the item to UI
+            UICtrl.addListItem(newItem, input.type);
 
-        //6. Display the budget on the UI
+            //4. Clear the fields
+            UICtrl.clearFields();
+
+            //5. Calculate the budget
+            updateBudget();
+
+
+            //6. Display the budget on the UI
+
+        }
+
+
+
 
     };
 

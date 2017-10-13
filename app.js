@@ -102,7 +102,23 @@ var UIController=(function () {   // Since it is IIFE, so we need return a objec
             // Insert the HTML into the DOM
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml );  //Add the item in HTML file
         },
-        
+
+        clearFields: function () {
+            var fields, fieldsArr;
+
+            fields = document.querySelectorAll(DOMStrings.inputDescription + ', ' + DOMStrings.inputValue);
+                                              // it will return a list. it use ',' as OR option
+            fieldsArr = Array.prototype.slice.call(fields);  // CALL function --> apply array method on LIST
+            console.log(fieldsArr);
+
+            fieldsArr.forEach( function (current, index, array) {
+                current.value = "";           // clearing the value
+            });
+
+            fieldsArr[0].focus();
+        },
+
+
         getDOMstrings: function () {  //This method allow other module can share this info outside of it
             return DOMStrings;
         }
@@ -141,9 +157,12 @@ var controller = (function (budgetCtrl, UICtrl) { //Bridge of 2 controller
         //3. Add the item to UI
         UICtrl.addListItem(newItem, input.type);
 
-        //4. Calculate the budget
+        //4. Clear the fields
+        UICtrl.clearFields();
 
-        //5. Display the budget on the UI
+        //5. Calculate the budget
+
+        //6. Display the budget on the UI
 
     };
 
